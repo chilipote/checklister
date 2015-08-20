@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe Checklister::Configuration do
-
   describe "#initialize" do
     it "should apply the defaults"
   end
@@ -12,5 +11,4 @@ describe Checklister::Configuration do
 
   describe "#to_hash"
   describe "#to_s"
-
 end
