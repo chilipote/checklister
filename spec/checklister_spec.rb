@@ -1,11 +1,19 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Checklister do
-  it 'has a version number' do
+  it "has a version number" do
     expect(Checklister::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(true).to eq(true)
+  describe ".config" do
+    it "is an instance of a the Configuration class" do
+      expect(Checklister.config).to be_a Checklister::Configuration
+    end
+
+    it "defines a value"
+  end
+
+  describe ".configure" do
+    it "should set a configuration parameter"
   end
 end
