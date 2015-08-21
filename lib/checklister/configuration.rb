@@ -51,9 +51,13 @@ module Checklister
 
     def prepare_attributes(attributes)
       # Convert string keys to symbols
-      symboled_attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      symboled_attributes = attributes.inject({}) do |memo,(k,v)|
+        memo[k.to_sym] = v
+        memo
+      end
       # Cleanup user_attributes from unwanted, nil and duplicate options
-      symboled_attributes.select { |key,_| ATTRIBUTES.include? key }.delete_if { |k, v| v.nil? }
+      symboled_attributes.select { |key,_| ATTRIBUTES.include? key }
+                         .delete_if { |_, v| v.nil? }
     end
   end
 end
