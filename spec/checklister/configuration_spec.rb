@@ -24,7 +24,7 @@ describe Checklister::Configuration do
     end
 
     it "does not apply unknown attributes" do
-      expect{ config.apply(foo: "bar") }.to raise_error(NoMethodError)
+      expect { config.apply(foo: "bar") }.to raise_error(NoMethodError)
     end
 
     it "accepts no arguments" do

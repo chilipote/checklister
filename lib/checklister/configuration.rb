@@ -12,11 +12,12 @@ module Checklister
     #   config.apply(gitlab_token: 'supersecret')
     #   config.gitlab_token #=> "supersecret"
     #
+    # @param attributes [Hash] list of key/values toapply to the configuration
     # @return [Object] the configuration object
     #
     def apply(attributes = {})
       attributes.each_pair do |attribute, value|
-        self.send("#{attribute}=", value)
+        send("#{attribute}=", value)
       end
       self
     end
