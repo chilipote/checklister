@@ -59,7 +59,7 @@ module Checklister
         memo
       end
       # Cleanup user_attributes from unwanted, nil and duplicate options
-      symboled_attributes.select { |key,_| ATTRIBUTES.include? key }
+      symboled_attributes.select { |key, _| ATTRIBUTES.include? key }
                          .delete_if { |_, v| v.nil? }
     end
   end

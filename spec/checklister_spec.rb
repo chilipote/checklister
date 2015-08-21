@@ -18,8 +18,8 @@ describe Checklister do
 
     describe ".configure" do
       it "should set a configuration parameter" do
-        Checklister.configure gitlab_host: 'example.com'
-        expect(Checklister.config.gitlab_host).to eq('example.com')
+        Checklister.configure gitlab_host: "example.com"
+        expect(Checklister.config.gitlab_host).to eq("example.com")
       end
     end
   end
