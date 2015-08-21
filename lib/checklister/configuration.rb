@@ -16,7 +16,8 @@ module Checklister
     # @return [Object] the configuration object
     #
     def apply(attributes = {})
-      attributes.each_pair do |attribute, value|
+      prepared_attributes = prepare_attributes attributes
+      prepared_attributes.each_pair do |attribute, value|
         send("#{attribute}=", value)
       end
       self
@@ -43,6 +44,16 @@ module Checklister
       to_hash.each_pair do |attribute, value|
         puts "%-20s %-50s" % ["#{attribute}:", value]
       end
+      nil
+    end
+
+    private
+
+    def prepare_attributes(attributes)
+      # Convert string keys to symbols
+      symboled_attributes = attributes.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      # Cleanup user_attributes from unwanted, nil and duplicate options
+      symboled_attributes.select { |key,_| ATTRIBUTES.include? key }.delete_if { |k, v| v.nil? }
     end
   end
 end

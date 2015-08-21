@@ -14,5 +14,9 @@ module Checklister
     def config
       @config ||= Checklister::Configuration.new
     end
+
+    def configure(attributes = {})
+      config.apply attributes
+    end
   end
 end

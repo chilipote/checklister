@@ -1,32 +1,38 @@
 #!/usr/bin/env ruby
-require 'gli'
-require 'checklister'
+require "gli"
+require "checklister"
 
 include GLI::App
 
-program_desc 'Describe your application here'
+program_desc "gives you the power to transform any markdown file or url checklist into an actionable gitlab and github issue."
 
 version Checklister::VERSION
 
-subcommand_option_handling :normal
-arguments :strict
+# Flags
+flag :gitlab_host, desc: "Set the gitlab host"
+flag :gitlab_token, desc: "Set the gitlab token"
 
-desc 'Describe some switch here'
-switch [:s,:switch]
+pre do |global_options,command,options,args|
+  Checklister.configure(global_options)
+end
 
-desc 'Describe some flag here'
-default_value 'the default'
-arg_name 'The name of the argument'
-flag [:f,:flagname]
+desc "Show current configuration settings"
+command :settings do |c|
+  c.action do |global_options,options,args|
+    puts "---------------------"
+    Checklister.config.to_stdout
+    puts "---------------------"
+  end
+end
 
-desc 'Describe setup here'
-arg_name 'Describe arguments to setup here'
+desc "Describe setup here"
+arg_name "Describe arguments to setup here"
 command :setup do |c|
-  c.desc 'Describe a switch to setup'
+  c.desc "Describe a switch to setup"
   c.switch :s
 
-  c.desc 'Describe a flag to setup'
-  c.default_value 'default'
+  c.desc "Describe a flag to setup"
+  c.default_value "default"
   c.flag :f
   c.action do |global_options,options,args|
 
@@ -39,27 +45,12 @@ command :setup do |c|
   end
 end
 
-desc 'Describe create here'
-arg_name 'Describe arguments to create here'
+desc "Describe create here"
+arg_name "Describe arguments to create here"
 command :create do |c|
   c.action do |global_options,options,args|
     puts "create command ran"
   end
-end
-
-pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abort and not call the
-  # chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
-  true
-end
-
-post do |global,command,options,args|
-  # Post logic here
-  # Use skips_post before a command to skip this
-  # block on that command only
 end
 
 on_error do |exception|
