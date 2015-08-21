@@ -5,15 +5,22 @@ describe Checklister do
     expect(Checklister::VERSION).not_to be nil
   end
 
-  describe ".config" do
-    it "is an instance of a the Configuration class" do
-      expect(Checklister.config).to be_a Checklister::Configuration
+  context "Gem Configuration" do
+    describe ".config" do
+      it "is an instance of a the Configuration class" do
+        expect(Checklister.config).to be_a Checklister::Configuration
+      end
+
+      it "defines a value" do
+        expect { Checklister.config.gitlab_host }.to_not raise_error
+      end
     end
 
-    it "defines a value"
-  end
-
-  describe ".configure" do
-    it "should set a configuration parameter"
+    describe ".configure" do
+      it "should set a configuration parameter" do
+        Checklister.configure gitlab_host: 'example.com'
+        expect(Checklister.config.gitlab_host).to eq('example.com')
+      end
+    end
   end
 end

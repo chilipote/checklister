@@ -1,4 +1,7 @@
 module Checklister
+  # Apply and hold every configuration options required by *checklister* to
+  # function properly.
+  #
   class Configuration
     # List of all the configuration attributes stored for use within the gem
     ATTRIBUTES = [:gitlab_host, :gitlab_token]
