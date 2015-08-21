@@ -8,7 +8,7 @@ module Checklister
     # Apply a configuration hash to a configuration instance
     #
     # @example Overide one a the configuration attributes
-    #   config = Checklister.new
+    #   config = Checklister::Configuration.new
     #   config.apply(gitlab_token: 'supersecret')
     #   config.gitlab_token #=> "supersecret"
     #
