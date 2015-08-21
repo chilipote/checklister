@@ -2,6 +2,9 @@ require "spec_helper"
 
 describe Checklister::Configuration do
   subject(:config) { Checklister::Configuration.new }
+  let(:valid_configuration_hash) do
+    { gitlab_host: "gitlab.example.com", gitlab_token: "supersecret" }
+  end
 
   describe "#initialize" do
     it "defines a default gitlab_host" do
@@ -34,6 +37,30 @@ describe Checklister::Configuration do
     end
   end
 
-  describe "#to_hash"
-  describe "#to_s"
+  describe "#to_hash" do
+    before do
+      config.apply valid_configuration_hash
+    end
+
+    it "returns a valid value with stringified keys" do
+      expect(config.to_hash).to include({
+        "gitlab_host" => valid_configuration_hash[:gitlab_host],
+        "gitlab_token" => valid_configuration_hash[:gitlab_token]})
+    end
+
+    it "does not return symbols keys" do
+      expect(config.to_hash).to_not include({ url: valid_configuration_hash[:url] })
+    end
+  end
+
+  describe "#to_stdout" do
+    it "is defined" do
+      expect(config).to respond_to(:to_stdout)
+    end
+
+    it "is not blank" do
+      expect(STDOUT).to receive(:puts).exactly(Checklister::Configuration::ATTRIBUTES.size).times
+      config.to_stdout
+    end
+  end
 end

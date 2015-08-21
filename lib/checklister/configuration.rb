@@ -21,5 +21,18 @@ module Checklister
       end
       self
     end
+
+    def to_stdout
+      to_hash.each_pair do |attribute, value|
+        puts "%-20s %-50s" % ["#{attribute}:", value]
+      end
+    end
+
+    def to_hash
+      ATTRIBUTES.inject({}) do |hash,attr|
+        hash["#{attr}"] = self.instance_variable_get("@#{attr}")
+        hash
+      end
+    end
   end
 end
