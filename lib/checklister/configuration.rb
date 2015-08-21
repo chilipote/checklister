@@ -29,8 +29,8 @@ module Checklister
     end
 
     def to_hash
-      ATTRIBUTES.inject({}) do |hash,attr|
-        hash["#{attr}"] = self.instance_variable_get("@#{attr}")
+      ATTRIBUTES.inject({}) do |hash, attr|
+        hash["#{attr}"] = instance_variable_get("@#{attr}")
         hash
       end
     end

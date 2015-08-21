@@ -43,9 +43,8 @@ describe Checklister::Configuration do
     end
 
     it "returns a valid value with stringified keys" do
-      expect(config.to_hash).to include({
-        "gitlab_host" => valid_configuration_hash[:gitlab_host],
-        "gitlab_token" => valid_configuration_hash[:gitlab_token]})
+      expect(config.to_hash).to include("gitlab_host" => valid_configuration_hash[:gitlab_host],
+                                        "gitlab_token" => valid_configuration_hash[:gitlab_token])
     end
 
     it "does not return symbols keys" do
@@ -59,7 +58,8 @@ describe Checklister::Configuration do
     end
 
     it "is not blank" do
-      expect(STDOUT).to receive(:puts).exactly(Checklister::Configuration::ATTRIBUTES.size).times
+      expect(STDOUT).to receive(:puts)
+                    .exactly(Checklister::Configuration::ATTRIBUTES.size).times
       config.to_stdout
     end
   end
