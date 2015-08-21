@@ -48,7 +48,7 @@ describe Checklister::Configuration do
     end
 
     it "does not return symbols keys" do
-      expect(config.to_hash).to_not include(url: valid_configuration_hash[:url])
+      expect(config.to_hash).to_not include gitlab_host: valid_configuration_hash[:gitlab_host]
     end
   end
 
@@ -58,8 +58,7 @@ describe Checklister::Configuration do
     end
 
     it "is not blank" do
-      expect(STDOUT).to receive(:puts)
-                    .exactly(Checklister::Configuration::ATTRIBUTES.size).times
+      expect(STDOUT).to receive(:puts).exactly(Checklister::Configuration::ATTRIBUTES.size).times
       config.to_stdout
     end
   end
