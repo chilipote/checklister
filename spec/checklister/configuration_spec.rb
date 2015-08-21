@@ -20,7 +20,8 @@ describe Checklister::Configuration do
     end
 
     it "returns the modified configuration object" do
-      expect(config.apply).to be_a Checklister::Configuration
+      config.apply(gitlab_token: "bar")
+      expect(config.apply.gitlab_token).to eq("bar")
     end
 
     it "does not apply unknown attributes" do
