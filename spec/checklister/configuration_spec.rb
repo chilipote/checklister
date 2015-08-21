@@ -48,7 +48,7 @@ describe Checklister::Configuration do
     end
 
     it "does not return symbols keys" do
-      expect(config.to_hash).to_not include({ url: valid_configuration_hash[:url] })
+      expect(config.to_hash).to_not include(url: valid_configuration_hash[:url])
     end
   end
 
