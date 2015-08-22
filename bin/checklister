@@ -11,12 +11,16 @@ program_desc "gives you the power to transform any markdown file or url checklis
 version Checklister::VERSION
 subcommand_option_handling :normal
 arguments :strict
+sort_help :manually
 
 # Flags
 flag [:c,:config], default_value: File.join(ENV["HOME"],".checklister.yml"),
                    desc: "Set the saved configuration path"
-flag :gitlab_host, desc: "Set the gitlab host"
-flag :gitlab_token, desc: "Set the gitlab token"
+
+flag [:s,:service], must_match: ISSUE_SERVICES.values
+flag [:h,:host], desc: "Set the issue service host"
+flag [:u,:username], desc: "Set your username to access the issue service"
+flag [:t,:token], desc: "Set your token to access the issue service"
 
 pre do |global_options,command,options,args|
   Checklister.configure(global_options)
@@ -33,13 +37,11 @@ end
 
 desc "Save your gitlab or github settings for later"
 command :setup do |c|
-  c.flag [:i,:issue_service], must_match: ISSUE_SERVICES.values
-
   c.action do |global_options,options,args|
     data = {}
 
-    if options[:issue_service]
-      service_selected = options[:issue_service]
+    if options[:service]
+      service_selected = options[:service]
     else
       puts "* Which Issue Service would you like to setup?"
       ISSUE_SERVICES.each do |index, service|

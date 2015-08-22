@@ -4,7 +4,7 @@ module Checklister
   #
   class Configuration
     # List of all the configuration attributes stored for use within the gem
-    ATTRIBUTES = [:gitlab_host, :gitlab_token]
+    ATTRIBUTES = [:service, :host, :username, :token]
 
     attr_accessor *ATTRIBUTES
 

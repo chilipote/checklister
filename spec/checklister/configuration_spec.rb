@@ -3,28 +3,36 @@ require "spec_helper"
 describe Checklister::Configuration do
   subject(:config) { Checklister::Configuration.new }
   let(:valid_configuration_hash) do
-    { gitlab_host: "gitlab.example.com", gitlab_token: "supersecret" }
+    { host: "gitlab.example.com", username: 'benichu', token: "supersecret" }
   end
 
   describe "#initialize" do
-    it "defines a default gitlab_host" do
-      expect(config.gitlab_host).to be_nil
+    it "defines a default service" do
+      expect(config.service).to be_nil
     end
 
-    it "defines a default gitlab_host" do
-      expect(config.gitlab_token).to be_nil
+    it "defines a default host" do
+      expect(config.host).to be_nil
+    end
+
+    it "defines a default username" do
+      expect(config.username).to be_nil
+    end
+
+    it "defines a default host" do
+      expect(config.token).to be_nil
     end
   end
 
   describe "#apply" do
     it "applies the passed valid attributes hash" do
-      config.apply(gitlab_token: "foo")
-      expect(config.gitlab_token).to eq("foo")
+      config.apply(token: "foo")
+      expect(config.token).to eq("foo")
     end
 
     it "returns the modified configuration object" do
-      config.apply(gitlab_token: "bar")
-      expect(config.apply.gitlab_token).to eq("bar")
+      config.apply(token: "bar")
+      expect(config.apply.token).to eq("bar")
     end
 
     it "does not apply unknown attributes" do
@@ -33,7 +41,7 @@ describe Checklister::Configuration do
 
     it "accepts no arguments" do
       config.apply
-      expect(config.gitlab_token).to be_nil
+      expect(config.token).to be_nil
     end
   end
 
@@ -42,18 +50,23 @@ describe Checklister::Configuration do
     it "does nothing when no arguments given"
   end
 
+  describe "#read" do
+    it "reads the configuration file and returns a hash"
+  end
+
   describe "#to_hash" do
     before do
       config.apply valid_configuration_hash
     end
 
     it "returns a valid value with stringified keys" do
-      expect(config.to_hash).to include("gitlab_host" => valid_configuration_hash[:gitlab_host],
-                                        "gitlab_token" => valid_configuration_hash[:gitlab_token])
+      expect(config.to_hash).to include("host" => valid_configuration_hash[:host],
+                                        "username" => valid_configuration_hash[:username],
+                                        "token" => valid_configuration_hash[:token])
     end
 
     it "does not return symbols keys" do
-      expect(config.to_hash).to_not include gitlab_host: valid_configuration_hash[:gitlab_host]
+      expect(config.to_hash).to_not include host: valid_configuration_hash[:host]
     end
   end
 
