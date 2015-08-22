@@ -40,8 +40,8 @@ command :setup do |c|
   c.action do |global_options,options,args|
     data = {}
 
-    if options[:service]
-      service_selected = options[:service]
+    if global_options[:service]
+      service_selected = global_options[:service]
     else
       puts "* Which Issue Service would you like to setup?"
       ISSUE_SERVICES.each do |index, service|
@@ -53,7 +53,7 @@ command :setup do |c|
     end
 
     puts ""
-    puts "* We are going to help you set up: #{service_selected}"
+    puts "* We are going to help you set up the #{service_selected} service"
 
     if service_selected == "gitlab"
       puts ""
@@ -79,7 +79,7 @@ command :setup do |c|
 
     puts "Your configuration data for #{service_selected} is #{data}"
     puts ""
-    puts "Your configuration data has been saved at #{global_options[:config]}"
+    puts "* Your configuration data has been saved at #{global_options[:config]}"
   end
 end
 
