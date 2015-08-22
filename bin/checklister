@@ -48,6 +48,7 @@ command :setup do |c|
         puts "[#{index}] #{service}"
       end
       choice = STDIN.gets.to_i
+      raise("You need to select a service.") if choice < 1
       service_selected = ISSUE_SERVICES[choice.to_s]
     end
 
@@ -58,6 +59,7 @@ command :setup do |c|
       puts ""
       puts "** What is your gitlab host? (Ex: gitlab.com)"
       choice = STDIN.gets.chomp
+      raise("You need to type a host.") if choice == ""
       data["host"] = choice
     elsif service_selected == "github"
       data["host"] = "github.com"
@@ -66,14 +68,16 @@ command :setup do |c|
     puts ""
     puts "** What is your username at the #{service_selected} service?"
     choice = STDIN.gets.chomp
+    raise("You need to type a username.") if choice == ""
     data["username"] = choice
 
     puts ""
     puts "** What is your token with the #{service_selected} service?"
     choice = STDIN.gets.chomp
+    raise("You need to type a token.") if choice == ""
     data["token"] = choice
 
-    puts "Your configuration data is #{data}"
+    puts "Your configuration data for #{service_selected} is #{data}"
     puts ""
     puts "Your configuration data has been saved at #{global_options[:config]}"
   end
