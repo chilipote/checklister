@@ -4,11 +4,17 @@ require "checklister"
 
 include GLI::App
 
+ISSUE_SERVICES = { "1" => "gitlab", "2" => "github" }.freeze
+
 program_desc "gives you the power to transform any markdown file or url checklist into an actionable gitlab and github issue."
 
 version Checklister::VERSION
+subcommand_option_handling :normal
+arguments :strict
 
 # Flags
+flag [:c,:config], default_value: File.join(ENV["HOME"],".checklister.yml"),
+                   desc: "Set the saved configuration path"
 flag :gitlab_host, desc: "Set the gitlab host"
 flag :gitlab_token, desc: "Set the gitlab token"
 
@@ -25,23 +31,24 @@ command :settings do |c|
   end
 end
 
-desc "Describe setup here"
-arg_name "Describe arguments to setup here"
+desc "Save your gitlab or github settings for later"
 command :setup do |c|
-  c.desc "Describe a switch to setup"
-  c.switch :s
+  c.flag [:i,:issue_service], must_match: ISSUE_SERVICES.values
 
-  c.desc "Describe a flag to setup"
-  c.default_value "default"
-  c.flag :f
   c.action do |global_options,options,args|
+    if options[:issue_service]
+      service_selected = options[:issue_service]
+    else
+      puts "* Which Issue Service would you like to setup?"
+      ISSUE_SERVICES.each do |index, service|
+        puts "[#{index}] #{service}"
+      end
+      choice = STDIN.gets.to_i
+      service_selected = ISSUE_SERVICES[choice.to_s]
+    end
 
-    # Your command logic here
-
-    # If you have any errors, just raise them
-    # raise "that command made no sense"
-
-    puts "setup command ran"
+    puts ""
+    puts "* We are going to help you set up: #{service_selected}"
   end
 end
 

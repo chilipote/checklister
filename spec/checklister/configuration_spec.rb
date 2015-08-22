@@ -37,6 +37,11 @@ describe Checklister::Configuration do
     end
   end
 
+  describe "#save" do
+    it "persists the given attributes hash to the configuration file"
+    it "does nothing when no arguments given"
+  end
+
   describe "#to_hash" do
     before do
       config.apply valid_configuration_hash
