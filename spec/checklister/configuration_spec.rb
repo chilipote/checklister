@@ -3,7 +3,7 @@ require "spec_helper"
 describe Checklister::Configuration do
   subject(:config) { Checklister::Configuration.new }
   let(:valid_configuration_hash) do
-    { host: "gitlab.example.com", username: 'benichu', token: "supersecret" }
+    { host: "gitlab.example.com", username: "benichu", token: "supersecret" }
   end
 
   describe "#initialize" do
