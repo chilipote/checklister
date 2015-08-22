@@ -36,6 +36,8 @@ command :setup do |c|
   c.flag [:i,:issue_service], must_match: ISSUE_SERVICES.values
 
   c.action do |global_options,options,args|
+    data = {}
+
     if options[:issue_service]
       service_selected = options[:issue_service]
     else
@@ -49,6 +51,29 @@ command :setup do |c|
 
     puts ""
     puts "* We are going to help you set up: #{service_selected}"
+
+    if service_selected == "gitlab"
+      puts ""
+      puts "** What is your gitlab host? (Ex: gitlab.com)"
+      choice = STDIN.gets.chomp
+      data["host"] = choice
+    elsif service_selected == "github"
+      data["host"] = "github.com"
+    end
+
+    puts ""
+    puts "** What is your username at the #{service_selected} service?"
+    choice = STDIN.gets.chomp
+    data["username"] = choice
+
+    puts ""
+    puts "** What is your token with the #{service_selected} service?"
+    choice = STDIN.gets.chomp
+    data["token"] = choice
+
+    puts "Your configuration data is #{data}"
+    puts ""
+    puts "Your configuration data has been saved at #{global_options[:config]}"
   end
 end
 
