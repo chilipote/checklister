@@ -14,7 +14,7 @@ arguments :strict
 sort_help :manually
 
 # Flags
-flag [:c,:config], default_value: File.join(ENV["HOME"],".checklister.yml"),
+flag [:c,:config], default_value: File.join(ENV["HOME"],".checklister.json"),
                    desc: "Set the saved configuration path"
 
 flag [:s,:service], must_match: ISSUE_SERVICES.values

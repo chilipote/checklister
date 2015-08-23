@@ -11,7 +11,7 @@ describe Checklister do
         expect(Checklister.config).to be_a Checklister::Configuration
       end
 
-      it "defines a value" do
+      it "gets a configuration value" do
         expect { Checklister.config.host }.to_not raise_error
       end
     end
